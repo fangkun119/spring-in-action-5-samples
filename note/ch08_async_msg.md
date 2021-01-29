@@ -801,9 +801,9 @@ RabbitTemplate接口中用于拉取消息的方法
 > 		// 由框架来调用MessageConverter将Message转成Object
 > 		return (Order) rabbit.receiveAndConvert("tacocloud.order.queue");
 > 		// 另一种方式，使用ParameterizedTypeReference<Order>
->         // * 不仅由框架来调用MessageConverter，也有框架来进行类型检查和转型（Object → Order）
->         // * 但是需要MessageConverter实现SmartMessageConverter接口
->         // * 在Spring内置的候选中，Jackson2JsonMessageConverter是唯一的选择
+>    		// * 不仅由框架来调用MessageConverter，也有框架来进行类型检查和转型（Object → Order）
+>    		// * 但是需要MessageConverter实现SmartMessageConverter接口
+>    		// * 在Spring内置的候选中，Jackson2JsonMessageConverter是唯一的选择
 > 		// return rabbit.receiveAndConvert(
 > 		//    "tacocloud.order.queue", new ParameterizedTypeReference<Order>() {});      
 > 	}
@@ -960,7 +960,7 @@ RabbitTemplate接口中用于拉取消息的方法
 > ```java
 > @Service
 > public class KafkaOrderMessagingService{
->     // 注入KafkaTemplate
+>    	// 注入KafkaTemplate
 > 	private KafkaTemplate<String, Order> kafkaTemplate;
 > 	@Autowired
 > 	public KafkaOrderMessagingService(KafkaTemplate<String, Order> kafkaTemplate) {
@@ -970,9 +970,9 @@ RabbitTemplate接口中用于拉取消息的方法
 > 	@Override
 > 	public void sendOrder(Order order) {
 > 		kafkaTemplate.send("tacocloud.orders.topic", order);
->         // 因为在上面8.3.1.(2)小节已经配置了spring.kafka.template.default-topic为tacocloud.orders.topic
->         // 也可以直接使用下面的代码
->         // kafkaTemplate.sendDefault(order);
+>    		// 因为在上面8.3.1.(2)小节已经配置了spring.kafka.template.default-topic为tacocloud.orders.topic
+>    		// 也可以直接使用下面的代码
+>    		// kafkaTemplate.sendDefault(order);
 > 	}
 > }
 > ```
